@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 using UnityEngine;
 
 public class Ball : MonoBehaviour
@@ -12,7 +13,7 @@ public class Ball : MonoBehaviour
     [SerializeField] private Transform SpawnPoint;
     public GameObject level1;
     public int platformcounter = 0;
-    public int life = 3;
+    public int life = 2;
     // Start is called before the first frame update
     void Start()
     {
@@ -33,13 +34,24 @@ public class Ball : MonoBehaviour
         //Debug.Log(level1.GetComponent<Transform>().position.y);
         if (GetComponent<Transform>().position.y <  (level1.GetComponent<Transform>().position.y-1.0f)) {
             GetComponent<Transform>().position = SpawnPoint.transform.position;
+            if (life > 1)
+            {
+                life = life - 1;
+            }
+            else
+            {
+                SceneManager.LoadScene(2);
+            }
         }
         Debug.Log(GetComponent<Rigidbody>().velocity.y);
         if(((GetComponent<Rigidbody>().velocity.y==-0.0003206879f)||(GetComponent<Rigidbody>().velocity.y == -0.0003112555f)|| (GetComponent<Rigidbody>().velocity.y == 0.00066109f) ||(GetComponent<Rigidbody>().velocity.y == 0.0006479472f)) && (GetComponent<Rigidbody>().velocity.x < 0))
         {
-            if (life > 0)
+            if (life > 1)
             {
                 life = life - 1;
+            }
+            else {
+                SceneManager.LoadScene(2);
             }
             GetComponent<Transform>().position = SpawnPoint.transform.position;
         }
